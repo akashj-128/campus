@@ -5,6 +5,8 @@ from django.contrib import messages, auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from carts.views import _cart_id
+from carts.models import Cart,CartItem
 
 #verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -69,6 +71,21 @@ def login(request):
         print(f"Email: {email}, Password: {password}")
 
         if user is not None:
+            try:
+                print('Entering inside try block')
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                print(is_cart_item_exists)
+                if is_cart_item_exists:
+                  cart_item = CartItem.objects.filter(cart=cart)
+                  print(cart_item)
+                  for item in cart_item:
+                      item.user= user
+                      item.save()
+
+            except:
+                print('Entering inside execpet block')
+                pass
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')  # Optional success message
             return redirect('dashboard')
