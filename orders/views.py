@@ -151,7 +151,7 @@ def order_complete(request):
 
     try:
         order = Order.objects.get(order_number=order_number, is_ordered = True)
-        ordered_product = OrderProduct.objects.filter(order_id = order.id)
+        ordered_products = OrderProduct.objects.filter(order_id = order.id)
 
         subtotal = 0
         for i in ordered_products:
@@ -161,7 +161,7 @@ def order_complete(request):
 
         context = {
             'order':order,
-            'ordered_product':ordered_product,
+            'ordered_products':ordered_products,
             'order_number':order.order_number,
             'transID':payment.payment_id,
             'payment':payment,
