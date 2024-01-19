@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="section-conten padding-y bg">
+    {% include 'includes/alerts.html' %}
+<div class="container">
+	<div class="row">
+		{% include 'includes/dashboard_sidebar.html'%}
+	<main class="col-md-9">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Edit Your Profile</strong>
+			
+		</header>
+        <div class="card-body">
+            <div class="text-right">
+                <img src="{{userprofile.profile_picture.url }}" alt="Profile Picture" width="100" style="border-radius: 50%;">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="first_name">First Name</label>
+                                {{user_form.first_name}}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="last_name">Last Name</label>
+                                {{user_form.last_name}}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="first_name">Phone Number </label>
+                                {{user_form.phone_number}}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="last_name">Profile Picture</label>
+                                {{profile_form.profile_picture}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Address Line</label>
+                            {{profile_form.address_line}}
+                        </div>
+                     
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="first_name">City</label>
+                                {{profile_form.city}}
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="last_name">State</label>
+                                {{profile_form.state}}
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="last_name">Pincode</label>
+                                {{profile_form.pincode}}
+                            </div>
+                        </div>
+        
+                        <!-- Add the submit button here -->
+                        <button type="submit" value="Save" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div> <!-- row.// -->
+        </div> <!-- card-body .// -->
+        
+		</article> <!-- order-group.// --> 
+	</main>
+</div> <!-- row.// -->
+</div>
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}
