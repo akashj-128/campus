@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order,Payment,OrderProduct
 import datetime
 import json
 from store.models import Product
+
 # Create your views here.
 
 from django.core.mail import EmailMessage
@@ -72,8 +73,13 @@ def payments(request):
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
 
-    # Send order number and transactionid id back to SendData()
-    return render(request, 'orders/payments.html')
+    # Send order number and transactionid id back to SendData() method via JSONRespoonse
+    data = {
+        'order_number':order.order_number,
+        'transID' : payment.payment_id,
+    }
+
+    return JsonResponse(data)
 
 
 
@@ -138,6 +144,12 @@ def place_order(request, total = 0, quantity = 0):
             return HttpResponse("okay")
     else:
         return redirect('checkout')
+    
+def ordercomplate(request):
+    return render(request,'orders/order_complate.html')
+
+def order_complete(request):
+    return render(request,'orders/order_complate.html')
 
 
 
