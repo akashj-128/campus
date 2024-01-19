@@ -78,7 +78,6 @@ def payments(request):
         'order_number':order.order_number,
         'transID' : payment.payment_id,
     }
-
     return JsonResponse(data)
 
 
@@ -145,11 +144,36 @@ def place_order(request, total = 0, quantity = 0):
     else:
         return redirect('checkout')
     
-def ordercomplate(request):
-    return render(request,'orders/order_complate.html')
 
 def order_complete(request):
-    return render(request,'orders/order_complate.html')
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered = True)
+        ordered_product = OrderProduct.objects.filter(order_id = order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal +=i.product_price * i.quantity
+        payment = Payment.objects.get(payment_id=transID)
+
+
+        context = {
+            'order':order,
+            'ordered_product':ordered_product,
+            'order_number':order.order_number,
+            'transID':payment.payment_id,
+            'payment':payment,
+            'subtotal':subtotal,
+        }
+        return render(request,'orders/order_complate.html',context)
+    
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('home')
+    
+
+    
 
 
 
