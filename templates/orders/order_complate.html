@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+
+{% block content %}
+
 
 <div class="container" style="margin-top: 50px;">
     <center><i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
@@ -32,7 +34,7 @@
                                     <li><strong>Invoiced To</strong></li>
                                     <li>{{order.full_name}}</li>
                                     <li>{{order.full_address}}</li>
-                                    <li>{{order.city}}{{order.city}}</li>
+                                    <li>{{order.city}}, {{order.state}}</li>
                                     <li>{{order.country}}</li>
                                 </ul>
                             </div>
@@ -44,13 +46,13 @@
                                 <div class="well">
                                     <ul class="list-unstyled mb0">
                                         <li><strong>Order</strong> #{{order_number}}</li>
-                                        <li><strong>Transaction ID</strong> {{transID}}}</li>
-                                        <li><strong>Order Date:</strong> {{ order.created_at}}</li>
-                                        <li><strong>Status:</strong>{{payment.status}}</li>
+                                        <li><strong>Transaction ID</strong> {{transID}}</li>
+                                        <li><strong>Order Date:</strong> {{order.created_at}}</li>
+                                        <li><strong>Status:</strong> {{payment.status}}</li>
                                     </ul>
                                 </div>
                             </div>
-                           
+
                             <div class="invoice-items">
                                 <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
                                     <table class="table table-bordered">
@@ -62,34 +64,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for item in ordered_products %}
+                                          {% for item in ordered_products %}
                                             <tr>
-                                                <td>{{item.product.product_name}}</td>
-                                                <p class="text-muted small">
-                                                    {% if item.variations.all %}
-                                                        {% for i in item.variations.all %}
-                                                            {{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </p>
+                                                <td>{{item.product.product_name}}
+                                                  <p class="text-muted small">
+                                          					{% if item.variations.all %}
+                                          						{% for i in item.variations.all %}
+                                          							{{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
+                                          						{% endfor %}
+                                          					{% endif %}
+                                          				</p>
+                                                </td>
                                                 <td class="text-center">{{item.quantity}}</td>
-                                                <td class="text-center">{{item.product_price}}</td>
+                                                <td class="text-center">${{item.product_price}} USD</td>
                                             </tr>
-                                            {% endfor %}
+                                          {% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="2" class="text-right">Sub Total:</th>
-                                                <th class="text-center">₹ {{subtotal}}</th>
+                                                <th class="text-center">${{subtotal}} USD</th>
                                             </tr>
                                             <tr>
                                                 <th colspan="2" class="text-right">Tax:</th>
-                                                <th class="text-center">₹{{order.tax}}</th>
+                                                <th class="text-center">${{order.tax}} USD</th>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th colspan="2" class="text-right">Grand Total:</th>
-                                                <th class="text-center">₹{{order.order_total}}</th>
+                                                <th class="text-center">${{order.order_total}} USD</th>
                                             </tr>
                                         </tfoot>
                                     </table>
