@@ -14,9 +14,15 @@ from django.template.loader import render_to_string
 
 
 
+from django.http import JsonResponse
+from .models import Payment, Order
+
+from django.http import JsonResponse
+from .models import Payment, Order
+
 def payments(request):
     body = json.loads(request.body)
-    order = order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     #Store transaction details inside payment model
     print(body)
@@ -31,6 +37,9 @@ def payments(request):
     order.payment = payment
     order.is_ordered=True
     order.save()
+
+
+
 
     #Move the cart items to order product table 
 

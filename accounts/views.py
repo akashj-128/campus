@@ -9,6 +9,7 @@ from carts.views import _cart_id
 from carts.models import Cart,CartItem
 import requests
 from orders.models import Order,OrderProduct
+from django.core.exceptions import ObjectDoesNotExist
 
 #verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -156,14 +157,21 @@ def activate(request,uidb64, token):
 
 @login_required(login_url = 'login')
 def dashboard(request):
-    orders=Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+
+    try:
+        userprofile = UserProfile.objects.get(user_id=request.user.id)
+    except ObjectDoesNotExist:
+        # Handle the case where UserProfile does not exist (e.g., create a new profile)
+        userprofile = None
+
     context = {
-        'orders_count':orders_count,
-        'userprofile':userprofile,
+        'orders_count': orders_count,
+        'userprofile': userprofile,
     }
-    return render(request,'accounts/dashboard.html',context)
+    return render(request, 'accounts/dashboard.html', context)
+
 
 
 def forgotPassword(request):
@@ -299,4 +307,3 @@ def order_detail(request, order_id):
         'subtotal':subtotal,
     }
     return render(request,'accounts/order_detail.html',context)
-
