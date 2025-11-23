@@ -129,8 +129,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # ⚠️ Replace these two lines:
-EMAIL_HOST_USER = 'akash5july2000@gmail.com'
-EMAIL_HOST_PASSWORD = 'rzhaypxwlsuyvjas'
+EMAIL_HOST_USER = '@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
 
 # Default sender
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
