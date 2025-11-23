@@ -2,61 +2,140 @@
 
 {% block content %}
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    .register-section {
+        min-height: 100vh; /* full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+    }
 
-<section class="section-content padding-y">
+    .register-card {
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        border: none;
+        width: 100%;
+        max-width: 550px;
+    }
 
-    <!-- ============================ COMPONENT REGISTER   ================================= -->
-        <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-          {% include 'includes/alerts.html' %}
-          <article class="card-body">
-            <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form action="{% url 'register' %}" method="POST">
-                 {% csrf_token %}              
+    .register-header {
+        background: linear-gradient(135deg, #2979ff, #00b0ff);
+        padding: 25px;
+        border-radius: 18px 18px 0 0;
+        color: white;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .form-control {
+        height: 48px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #ff6d00, #ff9100);
+        border: none;
+        font-size: 17px;
+        height: 50px;
+        border-radius: 12px;
+        font-weight: bold;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #ff9100, #ff6d00);
+    }
+
+    .card-body label {
+        font-weight: 600;
+    }
+
+    .login-text a {
+        font-weight: bold;
+        color: #2979ff;
+        text-decoration: none;
+    }
+
+    .login-text {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+</style>
+
+<section class="section-content register-section">
+
+    <!-- Wrap card and login link together -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:15px; width:100%; max-width:550px;">
+
+        <div class="card register-card">
+
+            <div class="register-header">
+                Create Your Account
+            </div>
+
+            {% include 'includes/alerts.html' %}
+
+            <article class="card-body">
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+
                     <div class="form-row">
                         <div class="col form-group">
                             <label>First name</label>
-                              {{ form.first_name }}
-                        </div> <!-- form-group end.// -->
+                            {{ form.first_name }}
+                        </div>
+
                         <div class="col form-group">
                             <label>Last name</label>
                             {{ form.last_name }}
-                        </div> <!-- form-group end.// -->
-                    </div> <!-- form-row end.// -->
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label>Email Address</label>
-                            {{form.email}}
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group col-md-6">
-                          <label>Phone Number </label>
-                          {{form.phone_number}}
+                            <label>Email Address</label>
+                            {{ form.email }}
+                        </div>
 
-                        </div> <!-- form-group end.// -->
-                    </div> <!-- form-row.// -->
+                        <div class="form-group col-md-6">
+                            <label>Phone Number</label>
+                            {{ form.phone_number }}
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Create password</label>
-                              {{ form.password }}
-                        </div> <!-- form-group end.// --> 
+                            {{ form.password }}
+                        </div>
+
                         <div class="form-group col-md-6">
                             <label>Repeat password</label>
-                              {{ form.confirm_password }}
-                        </div> <!-- form-group end.// -->  
+                            {{ form.confirm_password }}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-                    </div> <!-- form-group// -->      
-                  {{ form.email.errors}}  
-                  {{ form.non_field_errors}}    
+
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                    </div>
+
+                    {{ form.email.errors }}
+                    {{ form.non_field_errors }}
+
                 </form>
-            </article><!-- card-body.// -->
-        </div> <!-- card .// -->
-        <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
-        <br><br>
-    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+            </article>
+
+        </div>
+
+        <p class="text-center login-text">
+            Already have an account? <a href="{% url 'login' %}">Log In</a>
+        </p>
+
+    </div>
+
+</section>
+
 {% endblock %}
-
-
-

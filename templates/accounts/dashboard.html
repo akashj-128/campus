@@ -2,97 +2,218 @@
 
 {% block content %}
 
+<style>
+    /* General Background */
+    .bg {
+        background: #f5f7fa;
+        min-height: 90vh;
+        padding: 30px 0;
+    }
+
+    /* Sidebar */
+    aside .list-group-item {
+        border-radius: 10px;
+        margin-bottom: 8px;
+        border: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        color: #495057;
+    }
+
+    aside .list-group-item.active {
+        background: linear-gradient(135deg, #2979ff, #00b0ff);
+        color: white;
+        border: none;
+    }
+
+    aside .list-group-item:hover {
+        background: #e6f0ff;
+        cursor: pointer;
+    }
+
+    aside .btn-light {
+        background: white;
+        border-radius: 10px;
+        width: 100%;
+        font-weight: 600;
+        margin-top: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+
+    aside .btn-light:hover {
+        background: #f0f0f0;
+    }
+
+    /* Card */
+    .card {
+        border-radius: 18px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        border: none;
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #2979ff, #00b0ff);
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        border-radius: 18px 18px 0 0;
+        padding: 15px 20px;
+    }
+
+    .card-body h6 {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .b {
+        font-weight: 700;
+        color: #2979ff;
+    }
+
+    /* Table */
+    table.table {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        background: white;
+    }
+
+    table.table td {
+        vertical-align: middle !important;
+    }
+
+    .img-xs {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .btn-outline-primary {
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background: #2979ff;
+        color: white;
+        border-color: #2979ff;
+    }
+
+    .btn-light {
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    /* Responsive spacing */
+    @media (max-width: 768px) {
+        aside {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
 <section class="section-conten padding-y bg">
     {% include 'includes/alerts.html' %}
-<div class="container">
-	<div class="row">
-	<aside class="col-md-3">
-		<!--   SIDEBAR   -->
-		<ul class="list-group">
-			<a class="list-group-item active" href="#"> My order history </a>
-			<a class="list-group-item" href="#"> Transactions </a>
-			<a class="list-group-item" href="#"> Return and refunds </a>
-			<a class="list-group-item" href="#">Settings </a>
-			<a class="list-group-item" href="#"> My Selling Items </a>
-			<a class="list-group-item" href="#"> Received orders </a>
-		</ul>
-		<br>
-		<a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
-		<!--   SIDEBAR .//END   -->
-	</aside>
-	<main class="col-md-9">
-		<article class="card">
-		<header class="card-header">
-			<strong class="d-inline-block mr-3">Order ID: 6123456789</strong>
-			<span>Order Date: 16 December 2018</span>
-		</header>
-		<div class="card-body">
-			<div class="row"> 
-				<div class="col-md-8">
-					<h6 class="text-muted">Delivery to</h6>
-					<p>Michael Jackson <br>  
-					Phone +1234567890 Email: myname@pixsellz.com <br>
-			    	Location: Home number, Building name, Street 123,  Tashkent, UZB <br> 
-			    	P.O. Box: 100123
-			 		</p>
-				</div>
-				<div class="col-md-4">
-					<h6 class="text-muted">Payment</h6>
-					<span class="text-success">
-						<i class="fab fa-lg fa-cc-visa"></i>
-					    Visa  **** 4216  
-					</span>
-					<p>Subtotal: $356 <br>
-					 Shipping fee:  $56 <br> 
-					 <span class="b">Total:  $456 </span>
-					</p>
-				</div>
-			</div> <!-- row.// -->
-		</div> <!-- card-body .// -->
-		<div class="table-responsive">
-		<table class="table table-hover">
-			<tr>
-				<td width="65">
-					<img src="../images/items/1.jpg" class="img-xs border">
-				</td>
-				<td> 
-					<p class="title mb-0">Product name goes here </p>
-					<var class="price text-muted">USD 145</var>
-				</td>
-				<td> Seller <br> Nike clothing </td>
-				<td width="250"> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
-			</tr>
-			<tr>
-				<td>
-					<img src="../images/items/2.jpg" class="img-xs border">
-				</td>
-				<td> 
-					<p class="title mb-0">Another name goes here </p>
-					<var class="price text-muted">USD 15</var>
-				</td>
-				<td> Seller <br> ABC shop </td>
-				<td> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
-			</tr>
-			<tr>
-				<td>
-					<img src="../images/items/3.jpg" class="img-xs border">
-				</td>
-				<td> 
-					<p class="title mb-0">The name of the product  goes here </p>
-					<var class="price text-muted">USD 145</var>
-				</td>
-				<td> Seller <br> Wallmart </td>
-				<td> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
-			</tr>
-		</table>
-		</div> <!-- table-responsive .end// -->
-		</article> <!-- order-group.// --> 
-	</main>
-</div> <!-- row.// -->
-</div>
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3">
+                <ul class="list-group">
+                    <a class="list-group-item active" href="#">My Order History</a>
+                    <a class="list-group-item" href="#">Transactions</a>
+                    <a class="list-group-item" href="#">Return & Refunds</a>
+                    <a class="list-group-item" href="#">Settings</a>
+                    <a class="list-group-item" href="#">My Selling Items</a>
+                    <a class="list-group-item" href="#">Received Orders</a>
+                </ul>
+                <a class="btn btn-light btn-block" href="{% url 'logout' %}"> 
+                    <i class="fa fa-power-off"></i> Log out
+                </a> 
+            </aside>
 
+            <!-- Main Content -->
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <strong>Order ID: 6123456789</strong>
+                        <span class="float-right">Order Date: 16 December 2018</span>
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            <div class="col-md-8">
+                                <h6 class="text-muted">Delivery to</h6>
+                                <p>Michael Jackson <br>  
+                                Phone: +1234567890 <br> Email: myname@pixsellz.com <br>
+                                Location: Home number, Building name, Street 123, Tashkent, UZB <br> 
+                                P.O. Box: 100123
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Payment</h6>
+                                <span class="text-success">
+                                    <i class="fab fa-lg fa-cc-visa"></i> Visa **** 4216  
+                                </span>
+                                <p>Subtotal: ₹356 <br>
+                                   Shipping fee: ₹56 <br> 
+                                   <span class="b">Total: ₹456</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tr>
+                                <td><img src="../images/items/1.jpg" class="img-xs border"></td>
+                                <td> 
+                                    <p class="title mb-0">Product name goes here</p>
+                                    <var class="price text-muted">₹145</var>
+                                </td>
+                                <td>Seller <br> Nike Clothing</td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-primary">Track Order</a> 
+                                    <a href="#" class="btn btn-light">Details</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../images/items/2.jpg" class="img-xs border"></td>
+                                <td> 
+                                    <p class="title mb-0">Another name goes here</p>
+                                    <var class="price text-muted">₹15</var>
+                                </td>
+                                <td>Seller <br> ABC Shop</td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-primary">Track Order</a> 
+                                    <a href="#" class="btn btn-light">Details</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../images/items/3.jpg" class="img-xs border"></td>
+                                <td> 
+                                    <p class="title mb-0">The name of the product goes here</p>
+                                    <var class="price text-muted">₹145</var>
+                                </td>
+                                <td>Seller <br> Walmart</td>
+                                <td>
+                                    <a href="#" class="btn btn-outline-primary">Track Order</a> 
+                                    <a href="#" class="btn btn-light">Details</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 {% endblock %}

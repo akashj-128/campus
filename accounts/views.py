@@ -13,6 +13,7 @@ import requests
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import EmailMultiAlternatives
 
 
 from django.utils.encoding import force_bytes
@@ -159,30 +160,39 @@ def dashboard(request):
 
 
 def forgotPassword(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         email = request.POST['email']
         if Account.objects.filter(email=email).exists():
             user = Account.objects.get(email__exact=email)
-              #Reset password email
-            cuurent_site = get_current_site(request)
+            
+            # Reset password email
+            current_site = get_current_site(request)
             mail_subject = 'Reset Your Password'
-            message = render_to_string('accounts/reset_password_email.html',{
-                'user':user,
-                'domain':cuurent_site,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':default_token_generator.make_token(user),
+            
+            html_message = render_to_string('accounts/reset_password_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
             })
-            # To send mail 
+            
+            # Send HTML email
             to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+            email_message = EmailMultiAlternatives(
+                subject=mail_subject,
+                body='Please use an HTML compatible email client!',
+                from_email=None,  # Uses DEFAULT_FROM_EMAIL
+                to=[to_email]
+            )
+            email_message.attach_alternative(html_message, "text/html")
+            email_message.send()
 
-            messages.success(request, 'Passwrord reset email has been sent to you email address.')
+            messages.success(request, 'Password reset email has been sent to your email address.')
             return redirect('login')
         else:
-            messages.error(request, 'Account does not exists!')
+            messages.error(request, 'Account does not exist!')
             return redirect('forgotPassword')
-    return render(request,'accounts/forgotPassword.html')
+    return render(request, 'accounts/forgotPassword.html')
 
 def reset(request,uidb64, token):
     try:

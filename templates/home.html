@@ -2,51 +2,105 @@
 {% load static %}
 
 {% block content %}
-<!-- ========================= SECTION MAIN ========================= -->
+
+<style>
+/* Modern Banner */
+.modern-banner img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Section Heading */
+.section-title {
+    font-weight: 700;
+    font-size: 28px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Product Cards */
+.card-product-grid {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    background: #fff;
+}
+
+.card-product-grid:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.card-product-grid .img-wrap {
+    height: 260px;
+    background: #f8f8f8;
+    display: block;
+}
+
+.card-product-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-product-grid .title {
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2575fc;
+}
+</style>
+
+<!-- ========================= SECTION MAIN (MODERN BANNER) ========================= -->
 <section class="section-intro padding-y-sm">
-<div class="container">
+    <div class="container">
 
-<div class="intro-banner-wrap">
-	<img src="{%static 'images/banners/1.jpg' %}" class="img-fluid rounded">
-</div>
+        <div class="intro-banner-wrap modern-banner">
+            <img src="{% static 'images/banners/1.jpg' %}" class="img-fluid">
+        </div>
 
-</div> <!-- container //  -->
+    </div>
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
 
-<!-- ========================= SECTION  ========================= -->
+<!-- ========================= SECTION POPULAR PRODUCTS ========================= -->
 <section class="section-name padding-y-sm">
 <div class="container">
 
 <header class="section-heading">
-	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">Popular products</h3>
-</header><!-- sect-heading -->
+    <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
+    <h3 class="section-title">Popular Products</h3>
+</header>
 
-	
 <div class="row">
-	{% for product in products %}
-	<div class="col-md-3">
-		<div class="card card-product-grid">
-			<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{product.images.url}}"> </a>
-			<figcaption class="info-wrap">
-				<a href="{{ product.get_url }}" class="title">{{product.product_name}}</a>
-				<div class="price mt-1">{{product.price}}</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	{% endfor %}
-</div> <!-- row.// -->
+    {% for product in products %}
+    <div class="col-md-3 mb-4">
+        <div class="card card-product-grid">
+            <a href="{{ product.get_url }}" class="img-wrap">
+                <img src="{{ product.images.url }}">
+            </a>
+            <figcaption class="info-wrap p-3">
+                <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+                <div class="price mt-1">₹{{ product.price }}</div>
+            </figcaption>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
-</div><!-- container // -->
+</div>
 </section>
-<!-- ========================= SECTION  END// ========================= -->
-
-
-
-
-
-</body>
-</html>
+<!-- ========================= SECTION END // ========================= -->
 
 {% endblock %}
